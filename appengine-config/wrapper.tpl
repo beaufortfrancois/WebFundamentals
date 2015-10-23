@@ -22,7 +22,16 @@
       function initComments() {
         var commentElem = document.getElementById('gplus-comments');
         var parentElem = document.getElementById('gplus-comment-container');
-        
+
+        // Add '.html' suffix to URL to display previous G+ comments before
+        // material design update.
+        window.URL = (window.URL || window.webkitURL);
+        var url = new URL(commentElem.dataset.url);
+        if (url.pathname.substr(-5) !== '.html') {
+          url.pathname += '.html';
+          commentElem.dataset.url = url;
+        }
+
         gapi.comments.render(commentElem, {
           href: commentElem.dataset.url,
           width: parentElem.offsetWidth,
